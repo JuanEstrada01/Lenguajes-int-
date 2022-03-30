@@ -39,9 +39,11 @@ padding-bottom: 10px;
 
 
 body {
-    background-color:rgb(8, 245, 134);
-    margin: auto;
-    
+  
+  background: #4568DC;
+  background: -webkit-linear-gradient(to right, #15aed4, #3cb47c);
+  background: linear-gradient(to right, #15aed4, #3cb47c);
+  
 }
 
 
