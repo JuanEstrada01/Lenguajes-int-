@@ -1,3 +1,5 @@
+// se importa la escena del juego
+import PlayScene from "./scenes/playScene.js";
 const config = {
 width: 800,
 height: 600,
@@ -10,6 +12,7 @@ phsysics: {
         gravity: {y : 0}
     }
 
-}
+},
+scene: [PlayScene]
 };
 const game = new Phaser.Game(config);
