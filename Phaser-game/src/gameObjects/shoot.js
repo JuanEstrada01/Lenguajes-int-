@@ -12,6 +12,8 @@ export default class shoot extends Phaser.Physics.Arcade.Sprite{
         this.setPosition(x,y);
         this.setActive(true);
         this.setVisible(true);
+        this.direction = direction;
+        this.rotation = this.direction;
         
       
 
@@ -19,6 +21,7 @@ export default class shoot extends Phaser.Physics.Arcade.Sprite{
     update(time,delta){
         this.x +=1;
         this.y +=1;
+        
 
 
     }

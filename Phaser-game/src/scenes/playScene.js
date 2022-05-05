@@ -7,7 +7,7 @@ export default class PlayScene extends Phaser.Scene{
     }
     //configuracion de metodos
     preload(){
-       this.load.image('background', '../../assets/img/background.png');
+       this.load.image('background', './assets/img/background.png');
        this.load.image('ship', './assets/img/ship.png');
        this.load.image('asteroid', './assets/img/asteroid-1.png');
        this.load.image('shoot', './assets/img/shoot.png');
@@ -31,14 +31,14 @@ export default class PlayScene extends Phaser.Scene{
             //parametros de disparo
             classType: shoot,
             maxSize: 10,
-            runChilldUpdate:true
+            runChildUpdate:true
         });
 
 
        
 
     }
-    update(){
+    update(time,delta){
         //se crean las teclas movimiento
         if(this.cursors.up.isDown){
             this.physics.velocityFromRotation(this.ship.rotation,200,this.ship.body.acceleration);
@@ -46,11 +46,13 @@ export default class PlayScene extends Phaser.Scene{
             this.ship.setAcceleration(0)
         }
         //disparo en el espacio
-        if(this.cursors.space.isDown){
-            let shoot = this.shootGroup.get();
+        if(this.cursors.space.isDown && time > this.lastFired){
+            let shoot = this.shootsGroup.get();
           
             if(shoot){
                 shoot.fire(this.ship.x,this.ship.y,this.ship.rotation)
+
+                this.lastFired = time + 50;
             }
         }
         if(this.cursors.left.isDown){
