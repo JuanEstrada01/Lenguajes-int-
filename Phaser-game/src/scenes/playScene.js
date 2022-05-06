@@ -1,4 +1,5 @@
 import shoot from "../gameObjects/shoot.js";
+import Asteroind from "../gameObjects/shoot.js"
 
 //se define la clase PlayScene
 export default class PlayScene extends Phaser.Scene{
