@@ -5,8 +5,7 @@ export default class shoot extends Phaser.Physics.Arcade.Sprite{
         super (scene, x,y,'shoot');
         //velocidad de las balas 
         this.speed = Phaser.Math.GetSpeed(400,1);
-        this.direction = 0;
-        this.angle = 0;
+       
     }
       //se instancia el disparo en la nave
     fire(x,y,direccion){
