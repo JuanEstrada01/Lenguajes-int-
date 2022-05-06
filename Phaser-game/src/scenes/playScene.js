@@ -44,12 +44,15 @@ export default class PlayScene extends Phaser.Scene{
             callbackScope:this,
             loop:true
         });
-
-
-       
+        this.physics.add.overlap(this.ship, this.asteroidsGroup, this.hitShip, null, this);
+        this.physics.add.collider(this.shootsGroup, this.asteroidsGroup, this.hitShoot, null, this);   
 
     }
     update(time,delta){
+        //pierde
+        if (this.gameOver) {
+            return;
+        }
         //se crean las teclas movimiento
         if(this.cursors.up.isDown){
             this.physics.velocityFromRotation(this.ship.rotation,200,this.ship.body.acceleration);
@@ -85,10 +88,24 @@ export default class PlayScene extends Phaser.Scene{
         }
    
 }
+//colisiones 
 addAsteroid() {
     let asteroid = new Asteroid(this, 200, 300, 'asteroid', 0);
     this.asteroidsGroup.add(asteroid, true);
     this.asteroidsArray.push(asteroid);
 
+}
+hitShip(ship, asteroid) {
+    this.physics.pause();
+    this.asteroidsTimedEvent.paused = true;
+    
+    this.ship.setTint(0xff0000);
+    this.ship.body.allowRotation = false;
+
+    this.gameOver = true;
+}
+
+hitShoot(shoot, asteroid) {
+    asteroid.disableBody(true, true);
 }
  }
