@@ -34,6 +34,16 @@ export default class PlayScene extends Phaser.Scene{
             maxSize: 10,
             runChildUpdate:true
         });
+        //se crea el grupo de los asteroides
+        this.asteroidGroup =this.physics.add.group();
+        //los asteroides se configuraran medida aparecen
+        this.asteroidsArray = [];
+        this.asteroidTimeEvent=this.time.addEvent({
+            delay: 1000,
+            callback: this.addAsteroid,
+            callbackScope:this,
+            loop:true
+        });
 
 
        
@@ -63,11 +73,22 @@ export default class PlayScene extends Phaser.Scene{
         }else{
             this.ship.setAngularVelocity(0);
         }
-
-
-    }
-        
-       
-
-    
+        this.asteroidsArray = this.asteroidsArray.filter(function (asteroid) {
+            return asteroid.active;
+        });
+        for(let asteroid of this.asteroidsArray){
+            if(!asteroid.isOrbiting()){
+                asteroid.launch(this.ship.x,this.ship.y);
+            }
+            asteroid.update(time,delta);
+            
+        }
+   
 }
+addAsteroid() {
+    let asteroid = new Asteroid(this, 200, 300, 'asteroid', 0);
+    this.asteroidsGroup.add(asteroid, true);
+    this.asteroidsArray.push(asteroid);
+
+}
+ }

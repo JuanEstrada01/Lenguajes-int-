@@ -6,13 +6,14 @@ export default class shoot extends Phaser.Physics.Arcade.Sprite{
         this.speed = Phaser.Math.GetSpeed(100,1);
         this.orbiting =false;
         this.direction = 0;
+        this.factor = 1;
        
     }
     isOrbiting(){
         return this.orbiting;
     }
       //se crean los parametros de los asteroides
-    launch(ShipX,shipY){
+    launch(shipX,shipY){
         this.orbiting=true;
         this.setActive(true);
         this,setVisible(true);
@@ -20,13 +21,21 @@ export default class shoot extends Phaser.Physics.Arcade.Sprite{
        let yOrigin = 0;
        this.setPosition(xOrigin, yOrigin);
        //la pendiente de la recta que pasa por 2 puntos
-       let m= (shipY - yOrigin) / (ShipX - xOrigin);
+       if(shipX > xOrigin){  
+       let m= (shipY - yOrigin) / (shipX - xOrigin);
        this.direction = Math.atan(m);
-       this.angleRotation = Phaser.Math.RND.between(0.2,0.9);
+   
+    }else{
+        this.factor = -1;
+        let m= (shipY - yOrigin) / ( xOrigin - shipX);
+        this.direction = Math.atan(m);
+
+    }
+    this.angleRotation = Phaser.Math.RND.between(0.2,0.9);
 
     }
     update(time,delta){
-        this.x += Math.cos(this.direction) * this.speed * delta;
+        this.x +=this.factor * Math.cos(this.direction) * this.speed * delta;
         this.y += Math.sin(this.direction) * this.speed * delta;
         this.angle += this.angleRotation;
         
