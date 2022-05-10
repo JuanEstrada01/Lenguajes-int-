@@ -1,23 +1,25 @@
 //se crea clase de disparos
-export default class shoot extends Phaser.Physics.Arcade.Sprite{
-    constructor (scene, x, y){
-        //sprite en escena 
-        super (scene, x,y,'shoot');
-        //velocidad de las balas 
-        this.speed = Phaser.Math.GetSpeed(400,1);
-       
+export default class Shoot extends Phaser.Physics.Arcade.Sprite {
+
+    constructor (scene, x, y) {
+        super(scene, x, y, 'shoot');
+
+        this.speed = Phaser.Math.GetSpeed(400, 1);
+        this.direction = 0;
+        this.angle = 0;
     }
-      //se instancia el disparo en la nave
-    fire(x,y,direccion){
-        this.setPosition(x,y);
+
+    fire(x, y, direction) {
+        this.setPosition(x, y);
         this.setActive(true);
         this.setVisible(true);
-        
+
         this.direction = direction;
         this.rotation = this.direction;
-
     }
-    update(time,delta){
+
+    update(time, delta) {
+        
         this.x += Math.cos(this.direction) * this.speed * delta;
         this.y += Math.sin(this.direction) * this.speed * delta;
         
@@ -25,7 +27,6 @@ export default class shoot extends Phaser.Physics.Arcade.Sprite{
             this.setActive(false);
             this.setVisible(false);
         }
-
-
+        
     }
 }
