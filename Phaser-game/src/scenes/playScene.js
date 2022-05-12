@@ -8,6 +8,8 @@ export default class PlayScene extends Phaser.Scene {
         this.lastFired = 0;
         this.asteroidElapsedTime = 3000;
         this.gameOver = false;
+        this.score = 0;
+        this.scoreText;
     }
 
     preload() {
@@ -15,6 +17,7 @@ export default class PlayScene extends Phaser.Scene {
         this.load.image('ship', './assets/img/ship.png');
         this.load.image('asteroid', './assets/img/asteroid.png');
         this.load.image('shoot', './assets/img/shoot.png');
+        this.load.image('gameOver', './assets/img/gameOver.png');
     }
 
     create() {
@@ -23,6 +26,8 @@ export default class PlayScene extends Phaser.Scene {
         this.add.image(640, 0, 'background');
         this.add.image(0, 480, 'background');
         this.add.image(640, 480, 'background');
+        this.add.image(640, 0,'gameOver');
+        
 
         this.ship = this.physics.add.image(400, 300, 'ship');
         this.ship.setDamping(true);
@@ -30,6 +35,8 @@ export default class PlayScene extends Phaser.Scene {
         this.ship.setMaxVelocity(200);
         this.ship.setCollideWorldBounds(true);
         this.ship.setSize(20, 30);
+    
+
 
         this.cursors = this.input.keyboard.createCursorKeys();
 
@@ -52,12 +59,17 @@ export default class PlayScene extends Phaser.Scene {
 
         this.physics.add.overlap(this.ship, this.asteroidsGroup, this.hitShip, null, this);
         this.physics.add.collider(this.shootsGroup, this.asteroidsGroup, this.hitShoot, null, this);
+       
     }
 
     update(time, delta) {
+       
+       
 
         if (this.gameOver) {
             return;
+            
+
         }
 
         if (this.cursors.up.isDown) {
